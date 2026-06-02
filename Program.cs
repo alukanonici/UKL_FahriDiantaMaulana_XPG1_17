@@ -90,6 +90,7 @@ while (true)
         Console.WriteLine("\nPilihan Invalid!");
     }
     Console.WriteLine("\nTekan ENTER untuk mengulang..");
+    Console.Clear();
 
 }
 class Stand
@@ -102,6 +103,7 @@ class Stand
     {
         _namaStand = namaStand;
         _hargaSewaPerHari = hargaSewaPerHari;
+        _IsAvailable = true;
     }
 
     public string NamaStand
@@ -141,9 +143,8 @@ class Stand
 
     public void TampilInfo()
     {
-        Console.WriteLine($"\nNama Stand: {_namaStand}");
-        Console.WriteLine($"Harga Sewa/Hari: {_hargaSewaPerHari}");
-        Console.WriteLine($"Status Ketersediaan {_namaStand}: ({(IsAvailable ? "Tersedia!" : "Tidak Tersedia!")})");
+        Console.WriteLine($"\nNama Stand: {_namaStand} " + $"|Sewa/Hari: {_hargaSewaPerHari} " + $"|Ketersediaan Stand: ({(IsAvailable ? "Tersedia!" : "Sedang disewa!")})");
+        
     }
 
     public virtual double HitungTotal(int jumlahHari)
