@@ -1,16 +1,107 @@
-﻿using System.Numerics;
+﻿using System.Globalization;
+using System.Numerics;
+using System.Threading.Channels;
 
+List<Stand> data_stand = new List<Stand>()
+{
+    new Stand("Outdoor Stand 1", 400000),
+    new Stand("Outdoor Stand 2", 500000),
+    new Stand("Indoor Stand 1", 700000),
+    new Stand("Indoor Stand 2", 800000),
+    new Stand("Premium Stand 1", 1800000),
+    new Stand("Premium Stand 2", 2000000)
+};
+
+while (true)
+{
+    Console.WriteLine("___ Moklet Expo Management Center ___");
+    Console.WriteLine("\nDaftar Kendaraan");
+    foreach (var ds in data_stand)
+    {
+
+        ds.TampilInfo();
+    }
+
+    Console.Write("\nSilahkan pilih Stand yang ingin digunakan! ");
+    Console.WriteLine("\n1. Sewa Stand\n2. Akhiri Sewa Stand\n3. Keluar");
+    Console.WriteLine("Masukkan Pilihan: ");
+    string pilihan = Console.ReadLine();
+
+    if (pilihan == "1")
+    {
+        //penyewaan stand
+        Console.WriteLine("\nInput nama Stand: ");
+        string nama_Stand = Console.ReadLine();
+
+        var cari_Stand = data_stand.FirstOrDefault(cs => string.Equals(nama_Stand, cs.NamaStand, StringComparison.OrdinalIgnoreCase));
+
+        if (cari_Stand == null)
+        {
+            Console.WriteLine("\nStand tidak ditemukan");
+        }
+        else if (cari_Stand.IsAvailable)
+        {
+            Console.WriteLine("\nInput jumlah hari sewa: ");
+            int hari = int.Parse(Console.ReadLine());
+
+            double total_sewa = cari_Stand.HitungTotal(hari);
+
+            cari_Stand.ketersediaan();
+
+            Console.Write($"Total pembayaran sewa: Rp {total_sewa}");
+        }
+        else
+        {
+            Console.WriteLine("\nStand sedang tidak tersedia");
+        }
+
+    }
+    else if (pilihan == "2")
+    {
+        //Mengakhiri penyewaan
+
+        Console.WriteLine("\nInput nama stand: ");
+        string nama_Stand = Console.ReadLine();
+
+        var cari_Stand = data_stand.FirstOrDefault(cs => string.Equals(nama_Stand, cs.NamaStand, StringComparison.OrdinalIgnoreCase));
+
+        if (cari_Stand == null)
+        {
+            Console.WriteLine("\n Stand tidak ditemukan");
+        }
+        else if (!cari_Stand.IsAvailable)
+        {
+            cari_Stand.ketersediaan();
+            Console.WriteLine("Pengakhiran masa sewa berhasil diakhiri");
+        }
+        else
+        {
+            Console.WriteLine("Stand belum disewa");
+        }
+    }
+    else if (pilihan == "3")
+    {
+        Console.WriteLine("\nTekan ENTER untuk keluar..");
+        Console.ReadLine();
+        break;
+    }
+    else
+    {
+        Console.WriteLine("\nPilihan Invalid!");
+    }
+    Console.WriteLine("\nTekan ENTER untuk mengulang..");
+
+}
 class Stand
 {
     protected string _namaStand;
     protected double _hargaSewaPerHari;
     protected bool _IsAvailable;
 
-    public Stand(string namaStand, double hargaSewaPerHari, bool IsAvalilable)
+    public Stand(string namaStand, double hargaSewaPerHari)
     {
         _namaStand = namaStand;
         _hargaSewaPerHari = hargaSewaPerHari;
-        IsAvalilable = true;
     }
 
     public string NamaStand
@@ -48,11 +139,11 @@ class Stand
         _IsAvailable = !IsAvailable;
     }
 
-    public void info()
+    public void TampilInfo()
     {
         Console.WriteLine($"\nNama Stand: {_namaStand}");
         Console.WriteLine($"Harga Sewa/Hari: {_hargaSewaPerHari}");
-        Console.WriteLine($"Status Ketersediaan {_namaStand}: ({(IsAvailable ? "Tersedia!" : "Tidak Tersedia!")}");
+        Console.WriteLine($"Status Ketersediaan {_namaStand}: ({(IsAvailable ? "Tersedia!" : "Tidak Tersedia!")})");
     }
 
     public virtual double HitungTotal(int jumlahHari)
@@ -64,7 +155,7 @@ class Stand
 class OStand : Stand
 
 {
-    public OStand(string namaStand, double hargaSewaPerHari, bool IsAvalilable) : base(namaStand, hargaSewaPerHari, IsAvalilable)
+    public OStand(string namaStand, double hargaSewaPerHari) : base(namaStand, hargaSewaPerHari)
     { }
 
     protected double _biayaTenda = 75000;
@@ -82,7 +173,7 @@ class OStand : Stand
 
 class IStand : Stand
 {
-    public IStand(string namaStand, double hargaSewaPerHari, bool IsAvalilable) : base(namaStand, hargaSewaPerHari, IsAvalilable)
+    public IStand(string namaStand, double hargaSewaPerHari) : base(namaStand, hargaSewaPerHari)
     { }
 
     protected double _biayaListrik = 100000;
@@ -100,7 +191,7 @@ class IStand : Stand
 
 class PStand : Stand
 {
-    public PStand(string namaStand, double hargaSewaPerHari, bool IsAvalilable) : base(namaStand, hargaSewaPerHari, IsAvalilable)
+    public PStand(string namaStand, double hargaSewaPerHari) : base(namaStand, hargaSewaPerHari)
     { }
 
     protected double _biayaKeamanan = 300000;
