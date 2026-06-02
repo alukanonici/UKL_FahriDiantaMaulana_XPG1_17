@@ -61,10 +61,10 @@ class Stand
     }
 }
 
-class OutdoorStand : Stand
+class OStand : Stand
 
 {
-    public OutdoorStand(string namaStand, double hargaSewaPerHari, bool IsAvalilable) : base(namaStand, hargaSewaPerHari, IsAvalilable)
+    public OStand(string namaStand, double hargaSewaPerHari, bool IsAvalilable) : base(namaStand, hargaSewaPerHari, IsAvalilable)
     { }
 
     protected double _biayaTenda = 75000;
@@ -80,9 +80,9 @@ class OutdoorStand : Stand
     }
 }
 
-class IndoorStand : Stand
+class IStand : Stand
 {
-    public IndoorStand(string namaStand, double hargaSewaPerHari, bool IsAvalilable) : base(namaStand, hargaSewaPerHari, IsAvalilable)
+    public IStand(string namaStand, double hargaSewaPerHari, bool IsAvalilable) : base(namaStand, hargaSewaPerHari, IsAvalilable)
     { }
 
     protected double _biayaListrik = 100000;
@@ -98,3 +98,20 @@ class IndoorStand : Stand
 
 }
 
+class PStand : Stand
+{
+    public PStand(string namaStand, double hargaSewaPerHari, bool IsAvalilable) : base(namaStand, hargaSewaPerHari, IsAvalilable)
+    { }
+
+    protected double _biayaKeamanan = 300000;
+
+    public double BiayaKeamananan
+    {
+        get { return _biayaKeamanan; }
+    }
+
+    public override double HitungTotal(int jumlahHari)
+    {
+        return base.HitungTotal((int)(HargaSewaPerHari * jumlahHari)) + BiayaKeamananan;
+    }
+}
