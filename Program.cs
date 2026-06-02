@@ -120,10 +120,19 @@ class Stand
     }
 
     public string NamaStand
-    //tidak boleh kosong / hanya berisi spasi, gunakan method = "string.IsNullorWhiteSpace ()"
     {
         get { return _namaStand; }
-        set { _namaStand = value; }
+        set
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                _namaStand = value;
+            }
+            else
+            {
+                Console.WriteLine("Nama Stand tidak boleh kosong atau hanya berisi spasi!");
+            }
+        }
     }
 
     public double HargaSewaPerHari
@@ -180,7 +189,7 @@ class OStand : Stand
 
     public override double HitungTotal(int jumlahHari)
     {
-        return base.HitungTotal((int)(HargaSewaPerHari * jumlahHari)) + (BiayaTenda * jumlahHari);
+        return base.HitungTotal(jumlahHari) + (BiayaTenda * jumlahHari);
     }
 }
 
@@ -197,7 +206,7 @@ class IStand : Stand
     }
     public override double HitungTotal(int jumlahHari)
     {
-        return base.HitungTotal((int)(HargaSewaPerHari * jumlahHari)) + (BiayaListrik * jumlahHari);
+        return base.HitungTotal(jumlahHari) + (BiayaListrik * jumlahHari);
     }
 
 }
@@ -216,6 +225,6 @@ class PStand : Stand
 
     public override double HitungTotal(int jumlahHari)
     {
-        return base.HitungTotal((int)(HargaSewaPerHari * jumlahHari)) + BiayaKeamananan;
+        return base.HitungTotal(jumlahHari) + BiayaKeamananan;
     }
 }
