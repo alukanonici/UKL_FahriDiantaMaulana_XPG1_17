@@ -52,7 +52,7 @@ class stand
     {
         Console.WriteLine($"\nNama Stand: {_namaStand}");
         Console.WriteLine($"Harga Sewa/Hari: {_hargaSewaPerHari}");
-        Console.WriteLine($"Status Ketersediaan {_namaStand}: ({(IsAvailable ? "Tersedia!" : "Tidak Tersedia!")}")
+        Console.WriteLine($"Status Ketersediaan {_namaStand}: ({(IsAvailable ? "Tersedia!" : "Tidak Tersedia!")}");
     }
 
     public virtual double HitungTotal(int jumlahHari)
