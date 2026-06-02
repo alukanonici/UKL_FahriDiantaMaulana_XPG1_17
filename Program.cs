@@ -1,12 +1,12 @@
 ﻿using System.Numerics;
 
-class stand
+class Stand
 {
     protected string _namaStand;
     protected double _hargaSewaPerHari;
     protected bool _IsAvailable;
 
-    public stand(string namaStand, double hargaSewaPerHari, bool IsAvalilable)
+    public Stand(string namaStand, double hargaSewaPerHari, bool IsAvalilable)
     {
         _namaStand = namaStand;
         _hargaSewaPerHari = hargaSewaPerHari;
