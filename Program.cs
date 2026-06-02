@@ -52,7 +52,11 @@ while (true)
         }
         else
         {
+            Console.BackgroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.Black;
             Console.WriteLine("\nStand sedang tidak tersedia");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
     }
@@ -76,7 +80,11 @@ while (true)
         }
         else
         {
+            Console.BackgroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.Black;
             Console.WriteLine("Stand belum disewa");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
     else if (pilihan == "3")
@@ -87,9 +95,14 @@ while (true)
     }
     else
     {
+        Console.BackgroundColor = ConsoleColor.Red;
+        Console.ForegroundColor = ConsoleColor.Black;
         Console.WriteLine("\nPilihan Invalid!");
+        Console.BackgroundColor = ConsoleColor.Black;
+        Console.ForegroundColor = ConsoleColor.White;
     }
     Console.WriteLine("\nTekan ENTER untuk mengulang..");
+    Console.ReadLine();
     Console.Clear();
 
 }
@@ -144,7 +157,6 @@ class Stand
     public void TampilInfo()
     {
         Console.WriteLine($"\nNama Stand: {_namaStand} " + $"|Sewa/Hari: {_hargaSewaPerHari} " + $"|Ketersediaan Stand: ({(IsAvailable ? "Tersedia!" : "Sedang disewa!")})");
-        
     }
 
     public virtual double HitungTotal(int jumlahHari)
